@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainModel", "..\..\..\source\repos\MyTodoAppLatest\DomainModel\DomainModel.csproj", "{D45E0EB6-4ECC-46BE-9EC1-FECF73399AF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainModel2", "..\..\..\source\repos\MyTodoAppLatest\DomainModel\DomainModel2.csproj", "{D45E0EB6-4ECC-46BE-9EC1-FECF73399AF6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RepositoryLayer", "RepositoryLayernew\RepositoryLayer.csproj", "{9378D461-D5BB-4A77-A35E-50BC9EC07259}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLayer", "BusinessLayerNew\BusinessLayer.csproj", "{51ABFAF9-F57E-4244-861C-ABAE603353B9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestNewWebApp", "TestNewWebApp\TestNewWebApp.csproj", "{5DE24E38-9EEE-4188-A9C9-689090F356AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainModel", "DomainModel\DomainModel.csproj", "{7C11EB73-1B83-4F22-AB7C-EB47BEF2B460}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{5DE24E38-9EEE-4188-A9C9-689090F356AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DE24E38-9EEE-4188-A9C9-689090F356AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DE24E38-9EEE-4188-A9C9-689090F356AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C11EB73-1B83-4F22-AB7C-EB47BEF2B460}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C11EB73-1B83-4F22-AB7C-EB47BEF2B460}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C11EB73-1B83-4F22-AB7C-EB47BEF2B460}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C11EB73-1B83-4F22-AB7C-EB47BEF2B460}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

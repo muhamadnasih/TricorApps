@@ -15,7 +15,7 @@ namespace RepositoryLayer
 
         public async Task<IEnumerable<TodoModel>> GetAllAssigned(int userId)
         {
-            string query = "select";
+         
             //return _sql.LoadData<TodoModel,dynamic>(query,assignedId,"Default");
             return await _sql.LoadData<TodoModel, dynamic>("dbo.spTodo_GetAllAssigned",
              userId ,

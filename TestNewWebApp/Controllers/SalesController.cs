@@ -19,6 +19,30 @@ namespace TestNewWebApp.Controllers
             _userManager = userManager;
             this._data = data;
         }
+        public IActionResult Dashboard()
+        {
+
+            return View();
+
+        }
+
+        public async Task<IActionResult> GetSales()
+        {
+
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            try
+            {
+                var result = await _data.GetAllSales(user.Id);
+
+                return Json(result);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
 
         public async Task<IActionResult> ViewSales()
         {
@@ -54,7 +78,7 @@ namespace TestNewWebApp.Controllers
             {
                 var result = await _data.CreateSales(model.SalesItem,DateTime.Now,user.Id,model.Amount,DateTime.Now);
 
-                return View();
+                return RedirectToAction("ViewSales");
             }
 
             return View();

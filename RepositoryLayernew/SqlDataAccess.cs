@@ -15,10 +15,7 @@ namespace RepositoryLayer
         {
             _config = config;
         }
-        //public static string GetConnectionString(string connectionName = "MVCDemoDB")
-        //{
-        //    return ConfigurationManager.ConnectionStrings[connectionName].ConnectionString;
-        //}
+     
 
         public async Task<IEnumerable<T>> LoadData<T, U>(string storedProcedure, U parameters, string connectionStringName)
         {    //this code for web api
@@ -31,15 +28,6 @@ namespace RepositoryLayer
                 commandType: CommandType.StoredProcedure);
 
             return rows.ToList();
-
-            //using (IDbConnection cnn = new SqlConnection(GetConnectionString()))
-            //{
-            //    return await cnn.QueryAsync<T>(storedProcedure,
-            //    parameters,
-            //    commandType: CommandType.StoredProcedure);
-
-
-            //}
 
 
         }
@@ -54,13 +42,7 @@ namespace RepositoryLayer
                parameters,
                commandType: CommandType.StoredProcedure);
 
-            //using (IDbConnection cnn = new SqlConnection(GetConnectionString()))
-            //{
-            //   // return cnn.Execute(sql, data);
-            //    await cnn.ExecuteAsync(storedProcedure,
-            //   parameters,
-            //   commandType: CommandType.StoredProcedure);
-            //}
+         
         }
     }
 }

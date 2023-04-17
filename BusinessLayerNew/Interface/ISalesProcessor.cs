@@ -8,6 +8,7 @@ namespace BusinessLayer.Interface
         Task DeleteSales(string userId, int salesId);
         Task<IEnumerable<SalesDomainModel>> GetAllSales(string userId);
         Task<SalesDomainModel> GetSpecificSales(string userId, int salesId);
-        Task UpdateSales(int salesId, string salesItem, string userId, decimal amount, DateTime updateDate);
+        Task<SalesDomainModel?> UpdateSales(int salesId, string salesItem, string userId, decimal amount, DateTime updateDate);
+        Task<IEnumerable<MonthlySalesReportDomainModel>> GetMonthlySalesReport(int selectedMonth, int selectedyear);
     }
 }

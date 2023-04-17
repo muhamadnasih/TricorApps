@@ -17,7 +17,7 @@ namespace TestNewWebApp
             builder.Services.AddSingleton<ITodoProcessor,TodoProcessor>();
             builder.Services.AddSingleton<ISalesProcessor, SalesProcessor>();
             builder.Services.AddSingleton<ITodoData,TodoData>();
-            builder.Services.AddSingleton<ISalesData, salesionData>();
+            builder.Services.AddSingleton<ISalesData, SalesData>();
             builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");

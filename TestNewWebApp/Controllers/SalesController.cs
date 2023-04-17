@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Interface;
+using DomainModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -9,7 +10,7 @@ using TestNewWebApp.Models;
 
 namespace TestNewWebApp.Controllers
 {
-    [Authorize]
+   [Authorize]
     public class SalesController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
@@ -23,6 +24,18 @@ namespace TestNewWebApp.Controllers
         {
 
             return View();
+
+        }
+
+        public async Task<IActionResult> SalesData(int year, int month)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+           
+
+                var result = await _data.GetMonthlySalesReport(month, year);
+                return Json(result);
+
+       
 
         }
 
@@ -51,7 +64,7 @@ namespace TestNewWebApp.Controllers
             try
             {
                 var result = await _data.GetAllSales(user.Id);
-
+               
                 return View(result);
             }
             catch (Exception)
@@ -86,14 +99,38 @@ namespace TestNewWebApp.Controllers
         }
 
 
-        public async Task<IActionResult> Edit(int Id)
+        public async Task<IActionResult> EditSalesPartial(int Id)
         {
             // to get current user info
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
             var result = await _data.GetSpecificSales(user.Id, Id);
-            return PartialView("_EditSalesPartial", result);
+            SalesViewModel model = new SalesViewModel();
+            model.SalesId = result.Id;
+            model.SalesItem = result.SalesItem;
+            model.Amount = result.Amount; 
+            model.SalesDate = result.SalesDate;
+            return PartialView("_EditSalesPartial", model);
         }
+        [HttpPost]
+        public async Task<IActionResult> EditSales(SalesViewModel model)
+        {
+            try
+            {
+                // to get current user info
+                var user = await _userManager.GetUserAsync(HttpContext.User);
+
+               var result = await _data.UpdateSales(model.SalesId, model.SalesItem, user.Id, model.Amount, DateTime.Now);
+
+                return Json(new { result });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
@@ -105,5 +142,9 @@ namespace TestNewWebApp.Controllers
 
             return Json(new { success = true });
         }
+
+
+
+
     }
 }

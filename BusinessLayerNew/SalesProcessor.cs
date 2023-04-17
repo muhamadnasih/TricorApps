@@ -42,12 +42,22 @@ namespace BusinessLayer
 
         }
 
-        public Task UpdateSales(int salesId, string salesItem, string userId, decimal amount, DateTime updateDate)
+        public async Task<SalesDomainModel?> UpdateSales(int salesId, string salesItem, string userId, decimal amount, DateTime updateDate)
         {
 
-            return _salesdate.UpdateSales(salesId, salesItem, userId, amount, updateDate);
+            return await _salesdate.UpdateSales(salesId, salesItem, userId, amount, updateDate);
 
         }
+
+        public async Task<IEnumerable<MonthlySalesReportDomainModel>> GetMonthlySalesReport(int selectedMonth, int selectedyear)
+        {
+
+            var result = await _salesdate.GetMonthlySalesReport(selectedMonth, selectedyear);
+            return result;
+
+        }
+
+
 
 
 

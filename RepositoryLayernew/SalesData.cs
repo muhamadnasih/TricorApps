@@ -5,10 +5,10 @@ using RepositoryLayer.Interfaces;
 
 namespace RepositoryLayer
 {
-    public class salesionData : ISalesData
+    public class SalesData : ISalesData
     {
         private readonly ISqlDataAccess _sql;
-        public salesionData(ISqlDataAccess sql)
+        public SalesData(ISqlDataAccess sql)
         {
             this._sql = sql;
         }
@@ -47,12 +47,23 @@ namespace RepositoryLayer
                 "DefaultConnection");
         }
 
-        public Task UpdateSales(int salesId, string salesItem, string userId, decimal amount, DateTime updateDate)
+        public async Task<SalesDomainModel?> UpdateSales(int salesId, string salesItem, string userId, decimal amount, DateTime updateDate)
         {
-            return _sql.SaveData<dynamic>("dbo.spSales_UpdateSales",
+            var results = await _sql.LoadData<SalesDomainModel,dynamic>("dbo.spSales_UpdateSales",
                new { SalesId = salesId, SalesItem = salesItem, UserId = userId, Amount = amount, UpdateDate = updateDate },
                "DefaultConnection");
+
+            return results.FirstOrDefault();
         }
+
+        public async Task<IEnumerable<MonthlySalesReportDomainModel>> GetMonthlySalesReport(int selectedMonth, int selectedYear)
+        {
+            return await _sql.LoadData<MonthlySalesReportDomainModel, dynamic>("dbo.spSales_GetMonthlySalesReport",
+               new { SelectedYear = selectedYear, SelectedMonth = selectedMonth},
+               "DefaultConnection");
+
+        }
+
 
 
     }

@@ -1,5 +1,5 @@
 ﻿@{
-    
+
     Layout = "~/Views/Shared/AdminLTE/_Layout.cshtml";
 }
 
@@ -7,86 +7,103 @@
 
 <div class="text-center">
     <h1 class="display-4">Dashboard</h1>
-    <p>Sales Report</p>   
-</div>
-
-<div class="container">
-  <canvas id="salesChart" width="200" height="200"></canvas>
+    <p>Sales Report</p>
 </div>
 
 
+<!-- BAR CHART -->
+<div class="card card-success">
+    <div class="card-header">
+        <h3 class="card-title">Monthly Sales Chart By Agent</h3>
+
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="chart">
+            <canvas id="salesChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+        </div>
+    </div>
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->
 
 
 
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    $(document).ready(function () {
-    getSalesData();
-});
-    function getSalesData() {
-    // Use an AJAX request to fetch the sales data from your database
-    $.ajax({
-        url: "/Sales/GetSales",
-        type: "GET",
-        success: function (result) {
-            // Create an array to store the sales data
-            var salesData = [];
+    //$(document).ready(function () {
+    //    getSalesData();
+    //});
+    //function getSalesData() {
+    //    // Use an AJAX request to fetch the sales data from your database
+    //    $.ajax({
+    //        url: "/Sales/GetSales",
+    //        type: "GET",
+    //        success: function (result) {
+    //            // Create an array to store the sales data
+    //            var salesData = [];
 
-            // Loop through the result data and format it for use with Chart.js
-            for (var i = 0; i < result.length; i++) {
-                salesData.push({
-                    label: result[i].ProductName,
-                    data: result[i].TotalSales
-                });
-            }
+    //            // Loop through the result data and format it for use with Chart.js
+    //            for (var i = 0; i < result.length; i++) {
+    //                salesData.push({
+    //                    label: result[i].ProductName,
+    //                    data: result[i].TotalSales
+    //                });
+    //            }
 
-            // Call the function to create the chart using the formatted data
-            createChart(salesData);
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
-}
+    //            // Call the function to create the chart using the formatted data
+    //            createChart(salesData);
+    //        },
+    //        error: function (error) {
+    //            console.log(error);
+    //        }
+    //    });
+    //}
 
-function createChart(data) {
-    // Create a new Chart.js chart object
-    var ctx = document.getElementById('salesChart').getContext('2d');
-    var chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: data.map(x => x.label),
-            datasets: [{
-                label: 'Total Sales',
-                data: data.map(x => x.data),
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
+    // retrieve data from the SalesData action
+
+    $.get("/Sales/SalesData", { year: 2023, month: 4 }, function (data) {
+        debugger
+        var agentNames = data.map(x => x.userId);
+        var salesData = data.map(x => x.totalSales);
+
+        // create a bar chart using the retrieved data
+        var ctx = document.getElementById('salesChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: agentNames,
+                datasets: [{
+                    label: 'Monthly Sales',
+                    data: salesData,
+                    backgroundColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
                 }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
             }
-        }
+        });
     });
-}
+
 
 </script>

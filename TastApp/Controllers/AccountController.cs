@@ -20,6 +20,7 @@ namespace TastApp.Controllers
 
         public AccountController()
         {
+        //construc dont have comment
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
